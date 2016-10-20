@@ -5,6 +5,8 @@
 */
 class APIConnection
 {
+
+	public $json;
 	
 	function __construct()
 	{
@@ -22,50 +24,32 @@ class APIConnection
     $user_id = get_the_author_meta( 'ID' );
     $user_token = esc_attr( get_the_author_meta( 'lkd_tool_token', $user_id ) ); 
 
-    	/*if( $user_token){
-
-    		echo "<input id='user_access_token' type='hidden' value='" . $user_token . "'/>";
-    	}*/
+    
 
 		if ($user_token) {
 
-				if (!is_array($params)) $params = array();
-				$api_url = 'https://api.linkedin.com/v1/people/~:';
-				$param = '(id,first-name,last-name,headline,picture-url,industry,summary,specialties)';
-				$data = 'oauth2_access_token=' . $user_token;
-				$headers = array(
-						'Content-Type' => 'application/json',
-						'DataType' => 'jsonp');
+			if (!is_array($params)) $params = array();
+				$api_url = 'https://api.linkedin.com/v1/people/~';
+
+				/******Request all possible api data***********/
+				$param = ':(id,first-name,last-name,headline,picture-url,industry,summary,specialties,positions:(id,title,summary,start-date,end-date,is-current,company:(id,name,type,size,industry,ticker)),educations:(id,school-name,field-of-study,start-date,end-date,degree,activities,notes),associations,interests,num-recommenders,date-of-birth,publications:(id,title,publisher:(name),authors:(id,name),date,url,summary),patents:(id,title,summary,number,status:(id,name),office:(name),inventors:(id,name),date,url),languages:(id,language:(name),proficiency:(level,name)),skills:(id,skill:(name)),certifications:(id,name,authority:(name),number,start-date,end-date),courses:(id,name,number),recommendations-received:(id,recommendation-type,recommendation-text,recommender),honors-awards,three-current-positions,three-past-positions,volunteer)';
+
+				/******************************/
+				$auth = 'oauth2_access_token=' . $user_token;
 				$url = $api_url . $param;
+				$format = '&format=json';
 
-		/*********/
 
-		?>
+				if (false !== ($test_token = file_get_contents( $api_url . "?" . $auth))) {
+					$json_parsed = file_get_contents( $url . "?" . $auth . $format);
+				} 
+				else {
+				//var_dump('invalid token');	
+				}			
 
-		<script>
+				$this->json = json_decode($json_parsed);
 
-				jQuery(document).ready( function() {
-
-					var api_url = "<?php echo $url; ?>"
-					var user_data = "<?php echo $data; ?>"
-
-			jQuery.ajax({
-				type: "GET",
-		  		contentType: "application/json",
-		  		dataType: "jsonp",
-				url: api_url,
-				data: user_data,
-				success: function( data ){
-							console.log(data);
-						}
-			})
-		});
-
-		</script>
-
-		<?php
-
-		/*******/
+				/*********/
 
 		}
 
