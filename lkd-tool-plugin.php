@@ -29,6 +29,7 @@ require_once( dirname(__FILE__) . '/lkd-tool-settings.php' ); // Plugin settings
 // widget constructor
 require_once( dirname(__FILE__) . '/lkd-tool-display.php' );
 
+
 /**
 * 
 */
@@ -63,21 +64,11 @@ class LinkedinTool
 
 	$newInstance = new lkd_tool_plugin_init();
 	$newContructor = new lkd_tool_constructor();
-	$newConnection = new APIConnection();
+	$newConnection = new APIConnection( $user );
 
-	}
-
-
-	function add_js_scripts() {
-		wp_enqueue_script( 'script', plugins_url( "js/Json_request.js", __FILE__ ), array('jquery'), '1.0');
-
-		// pass Ajax Url to script.js
-		wp_localize_script('script', 'ajaxurl', admin_url( 'admin-ajax.php' ) );
 	}
 
 }
-
-//$LoadPlugin = new LinkedinTool();
 
 
 

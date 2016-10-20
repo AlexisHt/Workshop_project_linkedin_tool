@@ -41,7 +41,6 @@ class lkd_tool_plugin_init
         if ( !current_user_can( 'edit_user', $user_id ) )
             return false;
          update_user_meta( absint( $user_id ), 'lkd_tool_token', wp_kses_post( $_POST['ldk_tool_token_entry'] ) );
-         update_user_meta( absint( $user_id ), 'lkd_tool_user_id', md5(uniqid()));
     }
 
 }
