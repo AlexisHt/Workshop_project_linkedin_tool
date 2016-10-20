@@ -60,7 +60,7 @@ class LinkedinTool
 	wp_register_style( 'style', plugins_url( "css/style.css", __FILE__ ));
     wp_enqueue_style( 'style');
 
-	add_action('wp_enqueue_scripts', array(&$this, 'add_js_scripts'));
+	//add_action('wp_enqueue_scripts', array(&$this, 'add_js_scripts'));
 
 	$newInstance = new lkd_tool_plugin_init();
 	$newContructor = new lkd_tool_constructor();
