@@ -1,0 +1,16 @@
+.fixed{
+	position: fixed;
+}
+
+.linkedin-toolbox{
+
+	bottom: 0; 
+	border: 1px solid #000000; 
+	background-color: #ffffff; 
+	z-index: 999; 
+	padding: 5px;
+	width: 100%;
+	min-height: 100px;
+	max-height: 100px;
+
+}

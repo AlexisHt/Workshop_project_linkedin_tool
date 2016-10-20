@@ -26,6 +26,61 @@ load_plugin_textdomain( 'lkd_tool_trad', false, plugin_basename(dirname(__FILE__
 // Plugin and user settings
 require_once( dirname(__FILE__) . '/lkd-tool-settings.php' ); // Plugin settings
 
-// Tab constructor
+// widget constructor
 require_once( dirname(__FILE__) . '/lkd-tool-display.php' );
+
+/**
+* 
+*/
+
+add_action('plugins_loaded', array('LinkedinTool', 'get_instance'));
+
+class LinkedinTool
+{
+
+	private static $instance;
+
+	public static function get_instance() {
+		if (!self::$instance) {
+			self::$instance = new self();
+		}
+
+		return self::$instance;
+	}
+	
+	function __construct()
+	{
+		add_action('init', array(&$this, 'init') );
+	}
+
+	function init()
+	{
+
+	wp_register_style( 'style', plugins_url( "css/style.css", __FILE__ ));
+    wp_enqueue_style( 'style');
+
+	add_action('wp_enqueue_scripts', array(&$this, 'add_js_scripts'));
+
+	$newInstance = new lkd_tool_plugin_init();
+	$newContructor = new lkd_tool_constructor();
+	$newConnection = new APIConnection();
+
+	}
+
+
+	function add_js_scripts() {
+		wp_enqueue_script( 'script', plugins_url( "js/Json_request.js", __FILE__ ), array('jquery'), '1.0');
+
+		// pass Ajax Url to script.js
+		wp_localize_script('script', 'ajaxurl', admin_url( 'admin-ajax.php' ) );
+	}
+
+}
+
+//$LoadPlugin = new LinkedinTool();
+
+
+
+
+
 
