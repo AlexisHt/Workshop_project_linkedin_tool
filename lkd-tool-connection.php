@@ -28,6 +28,8 @@ class APIConnection
 
 		if ($user_token) {
 
+
+
 			if (!is_array($params)) $params = array();
 				$api_url = 'https://api.linkedin.com/v1/people/~';
 
@@ -40,6 +42,7 @@ class APIConnection
 				$format = '&format=json';
 
 
+
 				if (false !== ($test_token = file_get_contents( $api_url . "?" . $auth))) {
 					$json_parsed = file_get_contents( $url . "?" . $auth . $format);
 				} 
@@ -50,6 +53,33 @@ class APIConnection
 				$this->json = json_decode($json_parsed);
 
 				/*********/
+
+				?>
+				<script>
+		/*
+
+				jQuery(document).ready( function() {
+
+					var token_is_valid = jQuery('#token-validation');
+
+					var api_url = "<?php //echo $url; ?>"
+					var user_data = "<?php //echo $auth; ?>"
+
+					jQuery.ajax({
+						type: "post",
+				  		contentType: "application/json",
+				  		dataType: "jsonp",
+						url: api_url,
+						data: user_data,
+						success: function(){
+
+							token_is_valid.append('<input type="hidden" id="token-is-valid" value="token_is_valid"/>')
+								}
+					})
+		});
+     */
+		</script>
+<?php
 
 		}
 

@@ -2,6 +2,10 @@
 	position: fixed;
 }
 
+.clear{
+	clear: both;
+}
+
 .linkedin-toolbox{
 
 	bottom: 0; 
@@ -13,32 +17,54 @@
 	width: 100%;
 	min-height: 100px;
 	max-height: 100px;
-	float: left;
 	right: 0;
 	font-family: sans-serif;
 
 }
 
-.linkedin-toolbox table{
-table-layout: auto !important;
-border: none;
+.linkedin-toolbox div{
+
+float: left;
+margin: 5px;
+
 }
 
-.linkedin-toolbox tr,
-.linkedin-toolbox td,
-.linkedin-toolbox th
+#arrow-right
 {
-	border: none;
-	width: 30px;
+	float: right;
 }
+
+#arrow-left, #arrow-right
+{
+	cursor: pointer;
+}
+
+
 
 #lkd-picture img
 {
 	border-radius: 80px;
 }
 
-#lkd-profile-output table
+#lkd-profile-output
 {
 	border: 0;
 	float: left;
+}
+
+.lkd-tool-element div
+{
+	margin-right:8%;
+}
+
+#lkd-skills-output 
+{
+	display: none;
+	max-width: 80%;
+}
+
+#lkd-skills-output li
+{
+	display: inline-block;
+	padding: 7px;
 }

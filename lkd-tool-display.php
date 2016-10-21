@@ -9,6 +9,7 @@ class lkd_tool_constructor extends APIConnection
 	
 	function __construct()
 	{
+
 		$author_id=$post->post_author;
 	//	add_action( 'add_meta_boxes', array( $this, 'linkedin_card_constructor' ) );
 	//	add_action( 'save_post','save_linkedin_card_constructor' );
@@ -16,7 +17,6 @@ class lkd_tool_constructor extends APIConnection
 	}
 
 	public function lkd_load_profile_data( $page ) {
-
 		$data = $this->lkd_tool_data_request();
 		$data = $this->json;
 
@@ -58,35 +58,68 @@ class lkd_tool_constructor extends APIConnection
 
 		$data = $this->lkd_tool_data_request();
 		$data = $this->json;
-		/*$data->picture_url = 'https://lh3.googleusercontent.com/W45bk8cUYG4FOyFzzKdf_gDqH70k6a2M21utexHOaHNUtZX8ON0COH_qFdrjRJS_f5ZqFOaPmQ=w2400-h1350-no';*/
+		
+		$arrow_left = plugins_url( 'assets/img/ic_keyboard_arrow_left_black_24dp_2x.png', __FILE__ );
+		$arrow_right = plugins_url( 'assets/img/ic_keyboard_arrow_right_black_24dp_2x.png', __FILE__ );
 
 		?>
 
-		<div class="linkedin-toolbox fixed ">
 
-				<table id="lkd-profile-output" border="0">
+		<div class="linkedin-toolbox fixed ">
 				
 				<?php
 
+					echo "<div id='arrow-left'><img src='"  . $arrow_left . "'></div>";
 
-					echo "<tr>";
-					echo "<td rowspan='2' id='lkd-picture' ><img src='" . $data->picture_url . "' width='80px'></td>";
-					echo "<td>" . $data->firstName . "</td>";
-					echo "<td>" . $data->industry . "</td>";
-
-					echo "</tr>";
+					/***************/
+					echo "<div id='lkd-profile-output'>";
+					echo "<div id='lkd-picture'><img src='" . $data->picture_url . "' width='80px'></div>";
+					echo "<div class='lkd-tool-element'>" . $data->firstName ." ". $data->lastName . "<br/>" .  $data->headline . "</div>";
 					
-					echo "<tr>";
-					echo "<td>" . $data->lastName . "</td>";
-					echo "<td>" . $data->headline . "</td>";
-					echo "</tr>";
+					foreach ( $data->educations->values as $value ) {
+					 echo "<div class='lkd-tool-element'>" . $value->schoolName . "</br>" . $value->startDate->year . "-" . $value->endDate->year . "</div>"; 
+					} 
+					
+					echo "</div>";
+					/***************/
 
-				?>
+					/***************/
+					echo "<div id='lkd-skills-output'>";
+					echo "<ul>";
+					foreach ( $data->skills->values as $value)
+					{
+					echo "<li>" . $value->skill->name . "</li>";
 
-				</table>
-			
-		<?php
+					}
+					echo "</ul>";
+					echo "</div>";
+					/***************/
 
+					echo "<div id='arrow-right'><img src='"  . $arrow_right . "'></div>";
+
+
+					?>
+
+					<script>
+
+					jQuery(document).ready( function() {
+
+					jQuery( "#arrow-right" ).click(function() {
+					  	jQuery( "#lkd-profile-output" ).css( "display", "none" );
+					  	jQuery( "#lkd-skills-output" ).css( "display", "inline-block" );
+
+					});
+
+					jQuery( "#arrow-left" ).click(function() {
+				  	jQuery( "#lkd-profile-output" ).css( "display", "inline" );
+				  	jQuery( "#lkd-skills-output" ).css( "display", "none" );
+
+						});
+					});
+					</script>
+
+					<?php
+	
 	}
 
 
